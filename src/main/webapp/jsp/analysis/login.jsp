@@ -166,7 +166,7 @@ html, body {
     <div class="hg-login-header">
       <div class="hg-login-header-right">
         <img src="images/tudelft.png" />
-        <span style="font-size: 12px; padding-left: 20px; position:relative; top:-4px; color:black;">v0.1</span>
+        <span style="font-size: 12px; padding-left: 20px; position:relative; top:-4px; color:black;">game analysis v0.1</span>
       </div>
     </div>
   
@@ -188,15 +188,6 @@ html, body {
       <div class="hg-login">
         <form action="/housinggame-analysis/login" method="post">
          <table>
-           <tr>
-             <td width="60px">&nbsp;</td>
-             <td>Session &nbsp; </td>
-             <td>
-               <select name="gamesession">
-                 ${analysisData.getValidSessionOptions() }
-               </select>
-             </td>
-           </tr>
            <tr>
              <td width="60px">&nbsp;</td>
              <td>User name &nbsp; </td>
