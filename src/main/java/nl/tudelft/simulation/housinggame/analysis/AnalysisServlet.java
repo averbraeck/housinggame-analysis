@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/facilitator")
+@WebServlet("/analysis")
 public class AnalysisServlet extends HttpServlet
 {
 
@@ -28,7 +28,7 @@ public class AnalysisServlet extends HttpServlet
         AnalysisData data = SessionUtils.getData(session);
         if (data == null || data.getScenario() == null)
         {
-            response.sendRedirect("/housinggame-facilitator/login");
+            response.sendRedirect("/housinggame-analysis/login");
             return;
         }
 
@@ -56,7 +56,7 @@ public class AnalysisServlet extends HttpServlet
         prepareAccordionButtons(data, request); // dependent on NEW state
         handleTopMenu(data); // dependent on NEW state
 
-        response.sendRedirect("jsp/facilitator/facilitator.jsp");
+        response.sendRedirect("jsp/analysis/analysis.jsp");
     }
 
     public void handleTopMenu(final AnalysisData data)

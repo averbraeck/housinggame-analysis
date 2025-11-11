@@ -53,10 +53,10 @@ public class AnalysisData extends CommonData
     /** The scenario parameters. */
     private ScenarioparametersRecord scenarioParameters;
 
-    /** Gamesession for the facilitator (static during session). */
+    /** Gamesession for the analysis (static during session). */
     private GamesessionRecord gameSession;
 
-    /** Group that the facilitator is responsible for (static during session). */
+    /** Group that the analysis is responsible for (static during session). */
     private GroupRecord group;
 
     /** List of the players of the group (static during session). */
@@ -68,7 +68,7 @@ public class AnalysisData extends CommonData
     /** The list of GroupRounds until now. This is DYNAMIC. */
     private List<GrouproundRecord> groupRoundList = new ArrayList<>();
 
-    /** the news effects till the current facilitator round. */
+    /** the news effects till the current analysis round. */
     private Map<Integer, CumulativeNewsEffects> cumulativeNewsEffects;
 
     /* ================================= */
@@ -84,7 +84,7 @@ public class AnalysisData extends CommonData
     /** client info (dynamic) for popup. */
     private String modalWindowHtml = "";
 
-    /** the menu state of the facilitator app (right-hand side of the screen). */
+    /** the menu state of the analysis app (right-hand side of the screen). */
     private String menuState = "Player";
 
     /** the round for which the flood information is shown. */
@@ -115,7 +115,7 @@ public class AnalysisData extends CommonData
                     Context ctx = new InitialContext();
                     try
                     {
-                        ctx.lookup("/housinggame-facilitator_datasource");
+                        ctx.lookup("/housinggame-analysis_datasource");
                     }
                     catch (NamingException ne)
                     {
@@ -126,7 +126,7 @@ public class AnalysisData extends CommonData
                         config.setMaximumPoolSize(2);
                         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
                         DataSource dataSource = new HikariDataSource(config);
-                        ctx.bind("/housinggame-facilitator_datasource", dataSource);
+                        ctx.bind("/housinggame-analysis_datasource", dataSource);
                     }
                 }
                 catch (NamingException e)
@@ -134,7 +134,7 @@ public class AnalysisData extends CommonData
                     throw new RuntimeException(new ServletException(e));
                 }
 
-                this.dataSource = (DataSource) new InitialContext().lookup("/housinggame-facilitator_datasource");
+                this.dataSource = (DataSource) new InitialContext().lookup("/housinggame-analysis_datasource");
             }
             catch (NamingException e)
             {

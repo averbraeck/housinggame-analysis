@@ -110,12 +110,12 @@ public class AnalysisLoginServlet extends HttpServlet
 
         if (ok)
         {
-            response.sendRedirect("/housinggame-facilitator/facilitator");
+            response.sendRedirect("/housinggame-analysis/analysis");
         }
         else
         {
             session.removeAttribute("analysisData");
-            response.sendRedirect("jsp/facilitator/login.jsp");
+            response.sendRedirect("jsp/analysis/login.jsp");
         }
     }
 
@@ -123,7 +123,7 @@ public class AnalysisLoginServlet extends HttpServlet
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.sendRedirect("jsp/facilitator/login.jsp");
+        response.sendRedirect("jsp/analysis/login.jsp");
     }
 
 }
