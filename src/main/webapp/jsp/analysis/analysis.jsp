@@ -1,0 +1,715 @@
+<%@page import="nl.tudelft.simulation.housinggame.analysis.AnalysisData"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<jsp:include page="head.jsp"></jsp:include>
+<title>Housing Game analysis App</title>
+
+<style>
+body {
+  background-color: white;
+  margin: 10px;
+}
+
+.hg-fac-page {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.hg-fac-left {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.hg-fac-right {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.hg-fac-header {
+  
+}
+
+.hg-fac-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.hg-fac-item {
+  margin-right: 10px;
+}
+
+.hg-grid2-left {
+  display: grid;
+  row-gap: 4px;
+  column-gap: 10px;
+  justify-items: start;
+  align-items: center;
+  justify-content: start;
+  align-content: center;
+  grid-template-columns: auto auto;
+}
+
+.hg-grid2-left-right {
+  display: grid;
+  row-gap: 4px;
+  column-gap: 10px;
+  justify-items: start;
+  align-items: center;
+  justify-content: space-between;
+  align-content: center;
+  grid-template-columns: auto auto;
+}
+
+.hg-fac-accordion {
+  width: 100%;
+}
+
+.hg-fac-table td {
+  text-align: center;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+  .table>thead>tr>td, .table>thead>tr>th {
+  padding: 6px;
+}
+
+.table-striped tbody tr:nth-of-type(2n+1) {
+  background-color: #cce6ff;
+}
+
+.panel-group.pmd-accordion .panel>.panel-heading a {
+  padding: 0.5rem 1rem;
+  line-height: 1.2rem;
+}
+
+.panel-body {
+  padding: 1rem;
+}
+
+.btn-active {
+  disabled: false;
+  cursor: pointer;
+}
+
+.btn-inactive {
+  disabled: true !important;
+  cursor: not-allowed !important;
+  background-color: #ccc !important;
+}
+
+.hg-fac-table thead th {
+  color: white;
+  background-color: darkblue;
+  text-align: center;
+}
+
+.hg-flood-table1 tbody tr td:nth-of-type(3), .hg-flood-table2 tbody tr td:nth-of-type(2n+1),  
+.hg-flood-table2 tbody tr td:nth-of-type(8), .hg-flood-table3 tbody tr td:nth-of-type(2n)  {
+  border-right: 1px solid #4285F4;
+  border-collapse: collapse;
+}
+
+.hg-flood-table1, .hg-flood-table2, .hg-flood-table3 {
+  border: 1px solid #4285F4;
+  border-collapse: collapse;
+}
+
+.hg-flood-table1 thead tr th:first-of-type, .hg-flood-table2 thead tr:first-of-type th, 
+.hg-flood-table2 thead tr:last-of-type th:nth-of-type(2n+1) {
+  border-right: 1px solid #4285F4;
+  border-collapse: collapse;
+}
+
+.hg-flood-table3 thead tr:last-of-type th:nth-of-type(2n), .hg-flood-table3 thead tr:first-of-type th:nth-of-type(2n),
+.hg-flood-table3 thead tr:first-of-type th:nth-of-type(5), .hg-flood-table3 thead tr:first-of-type th:nth-of-type(7) {
+  border-right: 1px solid #4285F4;
+  border-collapse: collapse;
+}
+
+</style>
+</head>
+
+<body onload="initPage()">
+  <div class="hg-fac-page">
+    <div class="hg-fac-left">
+      <div class="hg-fac-header">
+        <div class="hg-grid2-left">
+          <div>
+            <img src="images/hg-logo.png" style="width: 75px; height: auto;" />
+          </div>
+          <div>
+            <h1>Housing Game analysis App</h1>
+          </div>
+          <div>Game session:</div>
+          <div>${AnalysisData.getGameSession().getName() }</div>
+          <div>Group / Table:</div>
+          <div>${AnalysisData.getGroup().getName() }</div>
+          <div>Round:</div>
+          <div>${AnalysisData.getCurrentRoundNumber() }</div>
+          <div>State:</div>
+          <div>${AnalysisData.getCurrentGroupRound().getGroupState() }</div>
+        </div>
+        <br />
+      </div>
+
+
+      <div class="hg-fac-accordion">
+        <div class="panel-group pmd-accordion" id="analysis-accordion" role="tablist" aria-multiselectable="true">
+
+          <!-- item 1: Round -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading1">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#analysis-accordion" href="#collapse1" aria-expanded="true"
+                  aria-controls="collapse1" data-expandable="false">1. Rounds <i
+                  class="material-icons md-dark pmd-sm pmd-accordion-arrow"> keyboard_arrow_down </i>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse1" class='panel-collapse collapse ${AnalysisData.getContentHtml("accordion/round") }'
+              role="tabpanel" aria-labelledby="heading1">
+              <div class="panel-body">
+                <div class="hg-grid2-left-right">
+                  <div>
+                    Allow the minimum <br /> number of players to <br /> start playing a new <br /> round of the game
+                  </div>
+                  <div>
+                    <form action="/housinggame-analysis/analysis" method="post">
+                      <input type="hidden" name="button" value="start-new-round" />
+                      <div class="hg-button">
+                        <input type="submit" value="START NEW ROUND"
+                          class='${AnalysisData.getContentHtml("button/start-new-round") }' 
+                          ${AnalysisData.getContentHtml("disabled/start-new-round")} />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- item 2: News -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading2">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#analysis-accordion" href="#collapse2" aria-expanded="false"
+                  aria-controls="collapse2" data-expandable="false">2. News <i
+                  class="material-icons md-dark pmd-sm pmd-accordion-arrow"> keyboard_arrow_down </i>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse2" class='panel-collapse collapse ${AnalysisData.getContentHtml("accordion/news") }'
+              role="tabpanel" aria-labelledby="heading2">
+              <div class="panel-body">
+                <div class="hg-grid2-left-right">
+                  <div>
+                    Read the news and press the<br /> 'ANNNOUNCE NEWS' button so <br /> that players can get the <br />
+                    news summary on their phone
+                  </div>
+                  <form action="/housinggame-analysis/analysis" method="post">
+                    <input type="hidden" name="button" value="announce-news" />
+                    <div class="hg-button">
+                      <input type="submit" value="ANNOUNCE NEWS"
+                        class='${AnalysisData.getContentHtml("button/announce-news") }'
+                        ${AnalysisData.getContentHtml("disabled/announce-news")} />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- item 3: House market -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading3">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#analysis-accordion" href="#collapse3" aria-expanded="false"
+                  aria-controls="collapse3" data-expandable="false">3. House market <i
+                  class="material-icons md-dark pmd-sm pmd-accordion-arrow"> keyboard_arrow_down </i>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse3" class='panel-collapse collapse ${AnalysisData.getContentHtml("accordion/houses") }'
+              role="tabpanel" aria-labelledby="heading3">
+              <div class="panel-body">
+                <div class="hg-grid2-left-right">
+                  <div>
+                    Show the available houses <br /> to the players on the table; <br /> press the SHOW HOUSES button
+                    <br /> for players to explore options. <br /> Go to your HOUSE OVERVIEW tab. <br /> <br /> In
+                    the map, ensure every player <br /> puts the pawn on the preferred house.<br /> Do a bidding
+                    process if needed.<br /> <br /> When everyone has agreed on the <br /> house to buy, press the
+                    buy button <br /> for every player. When finished, <br /> press the ASSIGN HOUSES and <br />
+                    CALCULATE TAXES buttons.
+                  </div>
+                  <div style="display: flex; flex-direction: column; justify-content: space-evenly;">
+                    <form action="/housinggame-analysis/analysis" method="post"
+                      style="margin-top: 10px; margin-bottom: 10px;">
+                      <input type="hidden" name="button" value="show-houses" />
+                      <div class="hg-button">
+                        <input type="submit" value="SHOW HOUSES"
+                          class='${AnalysisData.getContentHtml("button/show-houses") }
+                          ${AnalysisData.getContentHtml("disabled/show-houses")}' />
+                      </div>
+                    </form>
+                    <form action="/housinggame-analysis/analysis" method="post"
+                      style="margin-top: 10px; margin-bottom: 10px;">
+                      <input type="hidden" name="button" value="allow-selling" />
+                      <div class="hg-button">
+                        <input type="submit" value="ALLOW SELLING"
+                          class='${AnalysisData.getContentHtml("button/allow-selling") }'
+                          ${AnalysisData.getContentHtml("disabled/allow-selling")} />
+                      </div>
+                    </form>
+                    <form action="/housinggame-analysis/analysis" method="post"
+                      style="margin-top: 10px; margin-bottom: 10px;">
+                      <input type="hidden" name="button" value="finish-selling" />
+                      <div class="hg-button">
+                        <input type="submit" value="FINISH SELLING"
+                          class='${AnalysisData.getContentHtml("button/finish-selling") }'
+                          ${AnalysisData.getContentHtml("disabled/finish-selling")} />
+                      </div>
+                    </form>
+                    <form action="/housinggame-analysis/analysis" method="post"
+                      style="margin-top: 10px; margin-bottom: 10px;">
+                      <input type="hidden" name="button" value="allow-buying" />
+                      <div class="hg-button">
+                        <input type="submit" value="ALLOW BUYING"
+                          class='${AnalysisData.getContentHtml("button/allow-buying") }'
+                          ${AnalysisData.getContentHtml("disabled/allow-buying")} />
+                      </div>
+                    </form>
+                    <form action="/housinggame-analysis/analysis" method="post"
+                      style="margin-top: 10px; margin-bottom: 10px;">
+                      <input type="hidden" name="button" value="finish-buying" />
+                      <div class="hg-button">
+                        <input type="submit" value="FINISH BUYING"
+                          class='${AnalysisData.getContentHtml("button/finish-buying") }'
+                          ${AnalysisData.getContentHtml("disabled/finish-buying")} />
+                      </div>
+                    </form>
+                    <form action="/housinggame-analysis/analysis" method="post"
+                      style="margin-top: 10px; margin-bottom: 10px;">
+                      <input type="hidden" name="button" value="show-taxes" />
+                      <div class="hg-button">
+                        <input type="submit" value="CALCULATE TAXES"
+                          class='${AnalysisData.getContentHtml("button/show-taxes") }'
+                          ${AnalysisData.getContentHtml("disabled/show-taxes")} />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- item 4: House improvements -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading4">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#analysis-accordion" href="#collapse4" aria-expanded="false"
+                  aria-controls="collapse4" data-expandable="false">4. House improvements <i
+                  class="material-icons md-dark pmd-sm pmd-accordion-arrow"> keyboard_arrow_down </i>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse4"
+              class='panel-collapse collapse ${AnalysisData.getContentHtml("accordion/improvements") }'
+              role="tabpanel" aria-labelledby="heading4">
+              <div class="panel-body">
+                <div class="hg-grid2-left-right">
+                  <div>
+                    Explain that they can buy <br /> satisfaction or flood <br /> measures to protect their <br />
+                    property. Explore the <br />measures on the table.<br /> When ready, press <br /> ALLOW IMPROVEMENTS.
+                  </div>
+                  <form action="/housinggame-analysis/analysis" method="post">
+                    <input type="hidden" name="button" value="allow-improvements" />
+                    <div class="hg-button">
+                      <input type="submit" value="ALLOW IMPROVEMENTS"
+                        class='${AnalysisData.getContentHtml("button/allow-improvements") }'
+                        ${AnalysisData.getContentHtml("disabled/allow-improvements")} />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- item 5: Survey -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading5">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#analysis-accordion" href="#collapse5" aria-expanded="false"
+                  aria-controls="collapse5" data-expandable="false">5. Player perceptions <i
+                  class="material-icons md-dark pmd-sm pmd-accordion-arrow"> keyboard_arrow_down </i>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse5" class='panel-collapse collapse ${AnalysisData.getContentHtml("accordion/survey") }'
+              role="tabpanel" aria-labelledby="heading5">
+              <div class="panel-body">
+                <div class="hg-grid2-left-right">
+                  <div>
+                    Invite all players to<br /> enter the answers to the<br /> survey questions. <br /> Wait till all players
+                    <br /> have completed <br /> before closing
+                  </div>
+                  <div style="display: flex; flex-direction: column; justify-content: space-evenly;">
+                    <form action="/housinggame-analysis/analysis" method="post"
+                        style="margin-top: 10px; margin-bottom: 10px;">
+                      <input type="hidden" name="button" value="show-survey" />
+                      <div class="hg-button">
+                        <input type="submit" value="SHOW SURVEY"
+                          class='${AnalysisData.getContentHtml("button/show-survey") }'
+                          ${AnalysisData.getContentHtml("disabled/show-survey")} />
+                      </div>
+                    </form>
+                    <form action="/housinggame-analysis/analysis" method="post"
+                        style="margin-top: 10px; margin-bottom: 10px;">
+                      <input type="hidden" name="button" value="complete-survey" />
+                      <div class="hg-button">
+                        <input type="submit" value="COMPLETE SURVEY"
+                          class='${AnalysisData.getContentHtml("button/complete-survey") }'
+                          ${AnalysisData.getContentHtml("disabled/complete-survey")} />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- item 6: Floods -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading6">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#analysis-accordion" href="#collapse6" aria-expanded="false"
+                  aria-controls="collapse6" data-expandable="false">6. Floods and Damage<i
+                  class="material-icons md-dark pmd-sm pmd-accordion-arrow"> keyboard_arrow_down </i>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse6" class='panel-collapse collapse ${AnalysisData.getContentHtml("accordion/dice") }'
+              role="tabpanel" aria-labelledby="heading6">
+              <div class="panel-body">
+                <div class="hg-grid2-left-right">
+                  <div>
+                    Roll the dice for river<br /> and rain impacts, <br /> enter the data, and press <br /> the
+                    ROLL DICE button to show <br /> the players the effects of <br /> the flood/rain on their houses.
+                  </div>
+                  <form action="/housinggame-analysis/analysis" method="post">
+                    <input type="hidden" name="button" value="roll-dice" /> 
+
+                    <label for="fluvial">
+                      River dice roll (1-${AnalysisData.getScenarioParameters().getHighestFluvialScore() }):
+                    </label><br> 
+                    <input type="number" id="fluvial" name="fluvial"><br>
+
+                    <label for="pluvial">
+                      Rain dice roll (1-${AnalysisData.getScenarioParameters().getHighestPluvialScore() }):
+                    </label><br> 
+                    <input type="number" id="pluvial" name="pluvial"><br> 
+
+                    <div class="hg-button">
+                      <input type="submit" value="ROLL DICE, SHOW DAMAGE"
+                        class='${AnalysisData.getContentHtml("button/roll-dice") }'
+                        ${AnalysisData.getContentHtml("disabled/roll-dice")} />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- item 7: Summary -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading7">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#analysis-accordion" href="#collapse7" aria-expanded="false"
+                  aria-controls="collapse7" data-expandable="false">7. Summary <i
+                  class="material-icons md-dark pmd-sm pmd-accordion-arrow"> keyboard_arrow_down </i>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse7" class='panel-collapse collapse ${AnalysisData.getContentHtml("accordion/summary") }'
+              role="tabpanel" aria-labelledby="heading7">
+              <div class="panel-body">
+                <div class="hg-grid2-left-right">
+                  <div>
+                    Press the SHOW SUMMARY <br /> button so that players <br /> can pay their house damages <br />
+                    and get an overview of the <br /> satisfaction score before <br /> moving to the next round.
+                  </div>
+                  <form action="/housinggame-analysis/analysis" method="post">
+                    <input type="hidden" name="button" value="show-summary" />
+                    <div class="hg-button">
+                      <input type="submit" value="SHOW SUMMARY"
+                        class='${AnalysisData.getContentHtml("button/show-summary") }'
+                        ${AnalysisData.getContentHtml("disabled/show-summary")} />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- pmd-accordion -->
+
+      </div>
+      <!-- hg-fac-accordion -->
+    </div>
+
+    <div style="width: 48px; min-width: 48px;"></div>
+
+    <div class="hg-fac-right">
+      <div class="hg-fac-menu">
+        <div class="hg-fac-row">
+          <div class="hg-fac-item">
+            <form action="/housinggame-analysis/analysis" method="post">
+              <input type="hidden" name="menu" value="Player" />
+              <div class="hg-button">
+                <input type="submit" value='Player overview' class='${AnalysisData.getContentHtml("menuPlayer")}' />
+              </div>
+            </form>
+          </div>
+          <div class="hg-fac-item">
+            <form action="/housinggame-analysis/analysis" method="post">
+              <input type="hidden" name="menu" value="House" />
+              <div class="hg-button">
+                <input type="submit" value='House overview' class='${AnalysisData.getContentHtml("menuHouse")}' />
+              </div>
+            </form>
+          </div>
+          <div class="hg-fac-item">
+            <form action="/housinggame-analysis/analysis" method="post">
+              <input type="hidden" name="menu" value="Flood" />
+              <div class="hg-button">
+                <input type="submit" value='Flood overview' class='${AnalysisData.getContentHtml("menuFlood")}' />
+              </div>
+            </form>
+          </div>
+          <div class="hg-fac-item">
+            <form action="/housinggame-analysis/analysis" method="post">
+              <input type="hidden" name="menu" value="News" />
+              <div class="hg-button">
+                <input type="submit" value='News overview' class='${AnalysisData.getContentHtml("menuNews")}' />
+              </div>
+            </form>
+          </div>
+          <div class="hg-fac-item">
+            <form action="/housinggame-analysis/jsp/analysis/login.jsp" method="post">
+              <div class="hg-button">
+                <input type="submit" value='logout' class="btn" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="analysis-tables">
+        ${AnalysisData.getContentHtml("analysis/tables") }
+      </div>
+      
+    </div>
+  </div>
+  
+  
+  <!-- modal window for approval / rejection -->
+
+  ${AnalysisData.getModalWindowHtml()}
+
+  <!-- 
+  <div class="hg-modal" id="hg-modal" style="display:none;">
+    <div class="hg-modal">");
+      <div class="hg-modal-window" id="hg-modal-window">
+      </div>
+    </div>
+  </div>
+  <script>
+    dragElement(document.getElementById("hg-modal-window"));
+  </script>
+   -->
+
+
+  <!-- ---------------------------- scripts ---------------------------- -->
+
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+      reloadTables();
+    });
+    
+    function reloadTables() {
+      $.post("/housinggame-analysis/reload-tables", {
+        reloadTables : 'true'
+      }, function(data, status) {
+        var tableDiv = document.getElementById("analysis-tables");
+        tableDiv.innerHTML = data;
+        setTimeout(reloadTables, 2500);
+      });
+    }
+
+    // Buying popups and handling 
+    
+    function popupApproveBuy(playerCode, transactionId) {
+      $.post("/housinggame-analysis/popup-buy", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        approve: 'APPROVE'
+      }, function(status) {
+    	  window.location.reload();
+      });
+    }
+
+    function popupRejectBuy(playerCode, transactionId) {
+      $.post("/housinggame-analysis/popup-buy", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        approve: 'REJECT'
+      }, function(status) {
+          window.location.reload();
+      });
+    }
+
+    function approveBuy(playerCode, transactionId) {
+      var comment=$("#comment-buy").val();
+      $.post("/housinggame-analysis/approve-reject-buy", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        comment: JSON.stringify(comment),
+        approve: 'APPROVE'
+      }, function(status) {
+          window.location.href="/housinggame-analysis/analysis";
+      });
+    }
+
+    function rejectBuy(playerCode, transactionId) {
+      var comment=$("#comment-buy").val();
+      $.post("/housinggame-analysis/approve-reject-buy", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        comment: JSON.stringify(comment),
+        approve: 'REJECT'
+      }, function(status) {
+          window.location.href="/housinggame-analysis/analysis";
+      });
+    }
+    
+    // Staying popups and handling
+    
+    function popupApproveStay(playerCode, transactionId) {
+      $.post("/housinggame-analysis/popup-stay", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        approve: 'APPROVE'
+      }, function(status) {
+        window.location.reload();
+      });
+    }
+
+    function popupRejectStay(playerCode, transactionId) {
+      $.post("/housinggame-analysis/popup-stay", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        approve: 'REJECT'
+      }, function(status) {
+          window.location.reload();
+      });
+    }
+
+    function approveStay(playerCode, transactionId) {
+      var comment=$("#comment-stay").val();
+      $.post("/housinggame-analysis/approve-reject-stay", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        comment: JSON.stringify(comment),
+        approve: 'APPROVE'
+      }, function(status) {
+          window.location.href="/housinggame-analysis/analysis";
+      });
+    }
+
+    function rejectStay(playerCode, transactionId) {
+      var comment=$("#comment-stay").val();
+      $.post("/housinggame-analysis/approve-reject-stay", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        comment: JSON.stringify(comment),
+        approve: 'REJECT'
+      }, function(status) {
+          window.location.href="/housinggame-analysis/analysis";
+      });
+    }
+
+    // Selling popup and handling
+    
+    function popupApproveSell(playerCode, transactionId) {
+      $.post("/housinggame-analysis/popup-sell", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        approve: 'APPROVE'
+      }, function(status) {
+        window.location.reload();
+      });
+    }
+
+    function popupRejectSell(playerCode, transactionId) {
+      $.post("/housinggame-analysis/popup-sell", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        approve: 'REJECT'
+      }, function(status) {
+          window.location.reload();
+      });
+    }
+
+    function approveSell(playerCode, transactionId) {
+      var comment=$("#comment-sell").val();
+      $.post("/housinggame-analysis/approve-reject-sell", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        comment: JSON.stringify(comment),
+        approve: 'APPROVE'
+      }, function(status) {
+          window.location.href="/housinggame-analysis/analysis";
+      });
+    }
+
+    function rejectSell(playerCode, transactionId) {
+      var comment=$("#comment-sell").val();
+      $.post("/housinggame-analysis/approve-reject-sell", {
+        playerCode : JSON.stringify(playerCode),
+        transactionId : JSON.stringify(transactionId),
+        comment: JSON.stringify(comment),
+        approve: 'REJECT'
+      }, function(status) {
+          window.location.href="/housinggame-analysis/analysis";
+      });
+    }
+
+    // Flooding methods
+    
+    function floodRound(round) {
+      $('#hg-flood-round-' + round).submit();
+    }
+
+  </script>
+
+</body>
+
+</html>
