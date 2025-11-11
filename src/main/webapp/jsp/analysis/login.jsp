@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Housing Game analysis Login</title>
+<title>Housing Game Analysis Login</title>
 
 <!--  favicon -->
 <link rel="shortcut icon" href="/housinggame-analysis/favicon.ico" type="image/x-icon">
@@ -157,7 +157,7 @@ html, body {
 <body>
 
 <%
-  if(session.getAttribute("AnalysisData") == null) {
+  if(session.getAttribute("analysisData") == null) {
     AnalysisData AnalysisData = SessionUtils.getData(session);
   }
 %>
@@ -166,7 +166,7 @@ html, body {
     <div class="hg-login-header">
       <div class="hg-login-header-right">
         <img src="images/tudelft.png" />
-        <span style="font-size: 12px; padding-left: 20px; position:relative; top:-4px; color:black;">v1.8.0</span>
+        <span style="font-size: 12px; padding-left: 20px; position:relative; top:-4px; color:black;">v0.1</span>
       </div>
     </div>
   
@@ -176,14 +176,12 @@ html, body {
         <div class="hg-logo-right">
           <img src="images/hg-logo.png" />
         </div>
-        <h1>Housing Game analysis App</h1> 
+        <h1>Housing Game Analysis App</h1> 
         <p>The following functions are available:</p>
         <ul>
-          <li>Initialize play for the table</li>
-          <li>Advance the group to a next round</li>
-          <li>Read the news for the round</li>
-          <li>Enter the results of fluvial and pluvial events</li>
-          <li>Follow the players' progress</li>
+          <li>Analysis of a game session</li>
+          <li>Analysis of multiple sessions</li>
+          <li>Graphical presentation of results</li>
         </ul>
       </div>
 
@@ -195,7 +193,7 @@ html, body {
              <td>Session &nbsp; </td>
              <td>
                <select name="gamesession">
-                 ${AnalysisData.getValidSessionOptions() }
+                 ${analysisData.getValidSessionOptions() }
                </select>
              </td>
            </tr>
@@ -212,7 +210,7 @@ html, body {
          </table>
          <br/>
          <span>
-           <input type="submit" value="analysis LOGIN" class="hg-login-button" />
+           <input type="submit" value="GAME ANALYSIS LOGIN" class="hg-login-button" />
          </span>
         </form>
       </div>
